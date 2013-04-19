@@ -28,6 +28,9 @@ public class LoginDto {
 		super();
 	}
 
+	/**
+	 * Creates LoginDTO instance with arguments.. this is just a demo comment.
+	 */
 	public LoginDto(String username, String password, String confirmPassword,
 			Integer loginId, String email, String mobileNo) {
 		super();
