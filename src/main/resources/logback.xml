@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="SIMPLEDB" class="com.kikini.logging.simpledb.SimpleDBAppender">
+    <domainName>logsdb</domainName>
+    <accessId>AKIAJ6QBAUYOMEUWG2FQ</accessId>
+    <secretKey>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</secretKey>
+  </appender>
+     
+   <root level="TRACE">
+    <appender-ref ref="SIMPLEDB"/>
+  </root>
+</configuration>

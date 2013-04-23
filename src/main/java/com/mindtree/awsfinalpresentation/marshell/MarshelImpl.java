@@ -4,6 +4,7 @@
 package com.mindtree.awsfinalpresentation.marshell;
 
 import java.io.IOException;
+
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -13,6 +14,8 @@ import com.mindtree.awsfinalpresentation.dto.NewUser;
 import com.mindtree.awsfinalpresentation.entity.Booking;
 import com.mindtree.awsfinalpresentation.entity.Login;
 import com.mindtree.awsfinalpresentation.entity.Vehicle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author m1017010
@@ -23,10 +26,12 @@ import com.mindtree.awsfinalpresentation.entity.Vehicle;
  */
 public class MarshelImpl implements Marshel {
 
+	 private Logger logger =LoggerFactory.getLogger(MarshelImpl.class);
 	// Marshell vehicle object into XML
 	public String marshel(JAXBContext context, Vehicle vehicle)
 			throws JAXBException, IOException {
 		// JAXBContext instantiate marshaller
+		logger.info("Marshaling java object...");
 		Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		StringWriter sw = new StringWriter();
@@ -39,6 +44,7 @@ public class MarshelImpl implements Marshel {
 	public String marshel(JAXBContext context, Booking booking)
 			throws JAXBException, IOException {
 		// JAXBContext instantiate marshaller
+		logger.info("Marshaling java object...");
 		Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		StringWriter sw = new StringWriter();
@@ -52,6 +58,7 @@ public class MarshelImpl implements Marshel {
 	public String marshel(JAXBContext context, Login login)
 			throws JAXBException, IOException {
 		Marshaller m = context.createMarshaller();
+		logger.info("Marshaling java object...");
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		StringWriter sw = new StringWriter();
 		m.marshal(login, sw);

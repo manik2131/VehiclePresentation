@@ -4,6 +4,9 @@
 package com.mindtree.awsfinalpresentation.controller;
 
 import java.io.BufferedReader;
+
+
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -27,7 +30,8 @@ import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -87,8 +91,8 @@ public class RentalController {
 	 * Logger is used as custom information for admin. We can check errors in
 	 * file in tomcat.
 	 */
-	private Logger logger = Logger.getLogger(RentalController.class.getName());
-
+	//private Logger logger = Logger.getLogger(RentalController.class.getName());
+    private Logger logger =LoggerFactory.getLogger(RentalController.class);
 	/* to get values from property file */
 
 	@RequestMapping("/home.ren")
@@ -129,6 +133,8 @@ public class RentalController {
 			datepickercsslocation = (String) ctx
 					.lookup("java:comp/env/datepickercsslocation");
 			businessURL = (String) ctx.lookup("java:comp/env/businessURL");
+			
+			logger.info(businessURL);
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -147,6 +153,7 @@ public class RentalController {
 
 	@ModelAttribute("category")
 	public Map<String, String> getLeaveTypes() {
+		logger.info("Getting catagories");
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put(VehicleCategory.getString("select"),
 				VehicleCategory.getString("--select--"));
@@ -161,6 +168,7 @@ public class RentalController {
 
 	@ModelAttribute("fuelType")
 	public Map<String, String> getFuelTypes() {
+		logger.info("Getting fuel types");
 		Map<String, String> map = new LinkedHashMap<String, String>();
 
 		map.put(FuelDetails.getString("Petrol"), FuelDetails.getString("Petrol")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -176,6 +184,7 @@ public class RentalController {
 	@RequestMapping("/guestuser.ren")
 	// Specifies that method is invoked to handle request path("guestuser.ren")
 	public String permituser(Model model, HttpServletRequest request) {
+		logger.info("Enabling guest user");
 		HttpSession session = request.getSession(true);
 		session.setAttribute("username", "guest");
 		return "guestuserindex";
@@ -200,7 +209,7 @@ public class RentalController {
 			HttpServletResponse responses) throws JAXBException, IOException {
 
 		LoginDto admin = new LoginDto();
-
+		logger.info("Validating user...");
 		// Login admin = new Login();
 		admin.setUsername(ADMIN_USERNAME);
 		admin.setPassword(ADMIN_PASSWORD);
@@ -230,11 +239,13 @@ public class RentalController {
 
 					model.addAttribute("message",
 							"Welcome " + session.getAttribute("username"));
+					logger.info("Valid user...");
 				}
 				break;
 			} else {
 				page = "login";
 				model.addAttribute("message", "Invalid username and password");
+				logger.info("Invalid user...");
 			}
 		}
 		return page;
@@ -289,6 +300,7 @@ public class RentalController {
 		JAXBContext context0 = JAXBContext.newInstance(Users.class);
 		List<LoginDto> lList = null;
 
+		logger.info("Registering New User...");
 		URL = URL + "/nowvalidate.ren";
 		SendRequest sendRequest = new SendRequestImpl();
 		ClientResponse response0 = sendRequest.sendGetRequest(URL);
@@ -324,6 +336,7 @@ public class RentalController {
 						xmlString);
 
 				model.addAttribute("message", "Registered successfully");
+				logger.info("Registered successfully...");
 				return "login";
 
 			} else {
@@ -332,6 +345,7 @@ public class RentalController {
 		} else {
 			String message = "wrong password entered... try again";
 			model.addAttribute("message", message);
+			logger.info("Registration failed...");
 			return "simplecaptcha";
 
 		}
@@ -373,6 +387,7 @@ public class RentalController {
 			return "addvehicle";
 		}
 
+		logger.info("Adding vehicle...");
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("username");
 		model.addAttribute("message", username);
@@ -386,10 +401,12 @@ public class RentalController {
 		SendRequest sendRequest = new SendRequestImpl();
 		ClientResponse response = sendRequest.sendPostRequest(URL, xmlString);
 		if (response.getStatus() != 200) {
+			logger.info("Adding vehicle failed...");
 			return "error";
 		} else {
 			String output = response.getEntity(String.class);
 			model.addAttribute("msg", "Vehicle added successfully..");
+			logger.info("Vehicle added successfully...");
 			return "success";
 		}
 	}
@@ -504,6 +521,7 @@ public class RentalController {
 
 		URL = URL + "/bookingreport.ren";
 
+		logger.info("Getting Vehicle Report...");
 		SendRequest sendRequest = new SendRequestImpl();
 		ClientResponse response = sendRequest.sendGetRequest(URL);
 

@@ -2,6 +2,7 @@ package com.mindtree.awsfinalpresentation.ses;
 
 import java.util.LinkedList;
 
+
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -13,6 +14,8 @@ import com.amazonaws.services.simpleemail.model.Message;
 import com.amazonaws.services.simpleemail.model.SendEmailRequest;
 import com.amazonaws.services.simpleemail.model.SendEmailResult;
 import com.mindtree.awsfinalpresentation.entity.Booking;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author m1017042

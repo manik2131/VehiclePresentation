@@ -1,6 +1,7 @@
 package com.mindtree.awsfinalpresentation.unmarshell;
 
 import java.io.ByteArrayInputStream;
+
 import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -14,17 +15,22 @@ import com.mindtree.awsfinalpresentation.dto.ValueObject;
 import com.mindtree.awsfinalpresentation.dto.ValueObjects;
 import com.mindtree.awsfinalpresentation.dto.Vehicles;
 import com.sun.jersey.api.client.ClientResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * UnMarshalImpl is the implementation of UnMarshal interface
  * using jersey api
  * */
 public class UnMarshalImpl implements UnMarshal {
+	 private Logger logger =LoggerFactory.getLogger(UnMarshalImpl.class);
+
 
 	// Unmarshalls XML booking data into Booking object
 	public Booking unmarshalBooking(JAXBContext context, ClientResponse response)
 			throws JAXBException {
 
+		logger.info("Unmarshalling booking xml string...");
 		String output = response.getEntity(String.class);
 		ByteArrayInputStream input = new ByteArrayInputStream(output.getBytes());
 		// JAXBContext instantiate Unmarshaller
@@ -36,6 +42,7 @@ public class UnMarshalImpl implements UnMarshal {
 	// Unmarshalls XML ValueObject data into ValueObject object
 	public List<ValueObject> unmarshalReport(JAXBContext context,
 			ClientResponse response) throws JAXBException {
+		logger.info("Unmarshalling Report xml string...");
 		List<ValueObject> vo = null;
 		String output = response.getEntity(String.class);
 		ByteArrayInputStream input = new ByteArrayInputStream(output.getBytes());
@@ -49,6 +56,7 @@ public class UnMarshalImpl implements UnMarshal {
 	public List<String> unmarshalVehicles(JAXBContext context,
 			ClientResponse response) throws JAXBException {
 		List<String> vehics = null;
+		logger.info("Unmarshalling VehicleList xml string...");
 		String output = response.getEntity(String.class);
 		ByteArrayInputStream input = new ByteArrayInputStream(output.getBytes());
 		Unmarshaller um = context.createUnmarshaller();
@@ -63,6 +71,7 @@ public class UnMarshalImpl implements UnMarshal {
 	public List<LoginDto> unmarshallogin(JAXBContext context,
 			ClientResponse response) throws JAXBException {
 
+		logger.info("Unmarshalling login xml string...");
 		List<LoginDto> lList = null;
 		String output = response.getEntity(String.class);
 		ByteArrayInputStream input = new ByteArrayInputStream(output.getBytes());
