@@ -17,7 +17,7 @@
 
 		<br /> <br /> <a href="index.jsp"><h3>Continue...</h3></a> <br />
 
-		<h1>Version 1.5.0</h1>
+		<h1>Version 1.5.1</h1>
 	</center>
 </body>
 </html>
