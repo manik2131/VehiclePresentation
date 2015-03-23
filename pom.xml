@@ -298,7 +298,7 @@
 						  <file>${project.basedir}/src/main/docker/start_up.sh</file>
 						</artifact>
 					      </artifacts>
-					<nameAndTag>jayaram/mt-mvn-vr-presentation:${project.version}</nameAndTag>
+					<nameAndTag>manik2131/mt-mvn-vr-presentation:${project.version}</nameAndTag>
 					<registry>registry.hub.docker.com</registry>
 					<push>true</push>
 				    </image>
@@ -315,7 +315,7 @@
 					    <image>
 					      <id>${project.artifactId}</id>
 					      <tags>
-						<tag>jayaram/mt-mvn-vr-presentation:latest</tag>
+						<tag>manik2131/mt-mvn-vr-presentation:latest</tag>
 					      </tags>
 						<push>true</push>
 					    </image>
